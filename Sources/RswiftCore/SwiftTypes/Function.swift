@@ -34,7 +34,7 @@ struct Function: UsedTypesProvider, SwiftCodeConverible {
     let commentsString = comments.map { "/// \($0)\n" }.joined(separator: "")
     let availablesString = availables.map { "@available(\($0))\n" }.joined(separator: "")
     let accessModifierString = accessModifier.swiftCode
-    let staticString = isStatic ? "static " : ""
+    let staticString = isStatic ? "@objc static " : ""
     let genericsString = generics.map { "<\($0)>" } ?? ""
     let parameterString = parameters.map { $0.description }.joined(separator: ", ")
     let throwString = doesThrow ? " throws" : ""

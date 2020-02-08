@@ -18,7 +18,7 @@ struct StringsStructGenerator: ExternalOnlyStructGenerator {
 
   func generatedStruct(at externalAccessLevel: AccessLevel, prefix: SwiftIdentifier) -> Struct {
     let structName: SwiftIdentifier = "string"
-    let qualifiedName = prefix + structName
+    let qualifiedName = "@objc class" + structName
     let localized = localizableStrings.grouped(by: { $0.filename })
     let groupedLocalized = localized.grouped(bySwiftIdentifier: { $0.0 })
 
@@ -46,7 +46,7 @@ struct StringsStructGenerator: ExternalOnlyStructGenerator {
   private func stringStructFromLocalizableStrings(filename: String, strings: [LocalizableStrings], at externalAccessLevel: AccessLevel, prefix: SwiftIdentifier) -> Struct? {
 
     let structName = SwiftIdentifier(name: filename)
-    let qualifiedName = prefix + structName
+    let qualifiedName = "@objc class" + structName
 
     let params = computeParams(filename: filename, strings: strings)
 
@@ -245,7 +245,7 @@ struct StringsStructGenerator: ExternalOnlyStructGenerator {
       parameters: params,
       doesThrow: false,
       returnType: Type._String,
-      body: "return String(format: \(values.localizedString), locale: R.applicationLocale, \(args))"
+      body: "return String(format: \(values.localizedString), \(args))"
     )
   }
 
@@ -279,10 +279,10 @@ private struct StringValues {
     }
 
     if tableName == "Localizable" {
-      return "NSLocalizedString(\"\(escapedKey)\", bundle: R.hostingBundle\(valueArgument), comment: \"\")"
+      return "NSLocalizedString(\"\(escapedKey)\", bundle: R.hostingBundle, comment: \"\")"
     }
     else {
-      return "NSLocalizedString(\"\(escapedKey)\", tableName: \"\(tableName)\", bundle: R.hostingBundle\(valueArgument), comment: \"\")"
+      return "NSLocalizedString(\"\(escapedKey)\", tableName: \"\(tableName)\", bundle: R.hostingBundle, comment: \"\")"
     }
   }
 

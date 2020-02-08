@@ -18,7 +18,23 @@ extension Struct {
         isStatic: true,
         name: "hostingBundle",
         typeDefinition: .inferred(Type._Bundle),
-        value: "Bundle(for: R.Class.self)"),
+        value: """Bundle.main
+                static func updateLocale() {
+                    bundle = Bundle.bundle(for: LocalUserBridge_iOS.default().appLocale())
+                }
+    
+                @objc static func byKey(_ key: String) -> String {
+                    return NSLocalizedString(key, bundle: hostingBundle, value: "", comment: "")
+                }
+    
+                // For access from ObjC code
+                @objc static func replacePlaceholders(for string: NSString, with values: [NSString]) -> NSString {
+                    let stringValue = string as String
+                    let replacedString = stringValue.replacePlaceholders(with: values.map { $0 as String })
+        
+                    return replacedString as NSString
+                }
+        """),
       Let(
         comments: [],
         accessModifier: .filePrivate,

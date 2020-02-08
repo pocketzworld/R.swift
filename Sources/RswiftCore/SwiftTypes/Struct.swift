@@ -82,6 +82,6 @@ struct Struct: UsedTypesProvider, SwiftCodeConverible {
     let bodyComponents = [typealiasString, varsString, functionsString, structsString, classesString, fileprivateInit].filter { $0 != "" }
     let bodyString = bodyComponents.joined(separator: "\n\n").indent(with: "  ")
 
-    return "\(commentsString)\(availablesString)\(accessModifierString)struct \(type)\(implementsString) {\n\(bodyString)\n}"
+    return "\(commentsString)\(availablesString)\(accessModifierString)@objc class \(type)\(implementsString) {\n\(bodyString)\n}"
   }
 }
