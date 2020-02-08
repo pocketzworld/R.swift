@@ -57,6 +57,6 @@ struct Let: UsedTypesProvider, SwiftCodeConverible {
     case .inferred: typeString = ""
     }
 
-    return "\(commentsString)\(accessModifierString)\(staticString)let \(name)\(typeString) = \(value)"
+    return "\(commentsString)\(accessModifierString)\(staticString)var \(name)\(typeString) = \(value)"
   }
 }

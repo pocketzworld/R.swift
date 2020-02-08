@@ -83,7 +83,7 @@ struct Struct: UsedTypesProvider, SwiftCodeConverible {
     let bodyComponents = [typealiasString, varsString, functionsString, structsString, classesString, fileprivateInit].filter { $0 != "" }
     let bodyString = bodyComponents.joined(separator: "\n\n").indent(with: "  ")
 
-    return OSPrinter(code: "\(commentsString)\(availablesString)\(accessModifierString)struct \(type)\(implementsString) {\n\(bodyString)\n}", supportedOS: os).swiftCode
+    return OSPrinter(code: "\(commentsString)\(availablesString)\(accessModifierString)class \(type)\(implementsString) {\n\(bodyString)\n}", supportedOS: os).swiftCode
   }
 
   static var empty: Struct {
